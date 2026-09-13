@@ -1,0 +1,25 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create config.js
+        run: |
+          cat > config.js <<EOF
+          window.APP_CONFIG = {
+            API_URL: "${{ vars.API_URL }}",
+            CLIENT_ID: "${{ vars.CLIENT_ID }}",
+            APP_NAME: "${{ vars.APP_NAME }}",
+            REDIRECT_URL: "${{ vars.REDIRECT_URL }}"
+          };
+          EOF
